@@ -2,13 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title> Clock and Date</title>
+    <title>Clock and date</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* simple nav tab styling */
+        nav {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+    </style>
 </head>
 <body>
+<!-- nav tab -->
+<nav>
+    <a href="ok.html">go to ok</a>
+</nav>
+
 <div class="container">
-    <div id="clock"></div>
-    <div id="date"></div>
+    <div id="clock">--:--:--</div>
+    <div id="date">Loading date...</div>
     <button id="toggleFormat">Switch to 24-Hour</button>
 </div>
 

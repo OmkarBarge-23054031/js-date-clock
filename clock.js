@@ -1,7 +1,7 @@
 const clock = document.getElementById("clock");
 const toggleBtn = document.getElementById("toggleFormat");
 
-let is24Hour = false; // default to 12-hour
+let is24Hour = false; // start with 12-hour
 
 function showTime() {
     let time = new Date();
@@ -12,7 +12,7 @@ function showTime() {
 
     if (!is24Hour) {
         am_pm = hour >= 12 ? " PM" : " AM";
-        hour = hour % 12 || 12; // convert 0 => 12
+        hour = hour % 12 || 12; // 0 → 12
     }
 
     hour = hour.toString().padStart(2, "0");
@@ -25,7 +25,7 @@ function showTime() {
 toggleBtn.addEventListener("click", () => {
     is24Hour = !is24Hour;
     toggleBtn.textContent = is24Hour ? "Switch to 12-Hour" : "Switch to 24-Hour";
-    showTime(); // refresh immediately
+    showTime();
 });
 
 setInterval(showTime, 1000);

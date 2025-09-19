@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clock and date</title>
+    <style>
+        /* background with animated gradient */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(270deg, #0f0c29, #302b63, #24243e);
+            background-size: 600% 600%;
+            animation: gradientShift 18s ease infinite;
+            font-family: "poppins", sans-serif;
+            color: white;
+        }
+
+        /* navbar */
+
+        .navbar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+        }
+
+
+
+        .nav-link {
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px #00e6ff, 0 0 20px #00e6ff;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: #00e6ff;
+            color: black;
+            box-shadow: 0 0 20px #00e6ff, 0 0 40px #00e6ff;
+        }
+
+        /* glassy container */
+        .container {
+            text-align: center;
+            padding: 50px 70px;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+            animation: fadeIn 1.5s ease;
+        }
+
+        /* neon clock styling */
+        #clock {
+            font-size: 5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            text-shadow:
+                    0 0 10px #00e6ff,
+                    0 0 20px #00e6ff,
+                    0 0 40px #00e6ff,
+                    0 0 80px #00e6ff;
+            animation: neonPulse 2s infinite alternate;
+        }
+
+        /* neon date styling */
+        #date {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            text-shadow:
+                    0 0 5px #ff00de,
+                    0 0 15px #ff00de,
+                    0 0 30px #ff00de;
+            transition: opacity 0.5s ease;
+        }
+
+        /* button styling */
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            background: #ff0080;
+            color: white;
+            font-weight: bold;
+            transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 15px #ff0080, 0 0 30px #ff0080;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            background: #e60073;
+            box-shadow: 0 0 25px #ff0080, 0 0 50px #ff0080;
+        }
+
+        /* animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes neonPulse {
+            from {
+                text-shadow:
+                        0 0 5px #00e6ff,
+                        0 0 15px #00e6ff,
+                        0 0 30px #00e6ff,
+                        0 0 60px #00e6ff;
+            }
+            to {
+                text-shadow:
+                        0 0 20px #00e6ff,
+                        0 0 40px #00e6ff,
+                        0 0 80px #00e6ff,
+                        0 0 120px #00e6ff;
+            }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+<!-- nav tab -->
+<nav class="navbar">
+    <a href="index.html" class="nav-link">home</a>
+    <a href="ok.html" class="nav-link">ok</a>
+</nav>
+
+
+<div class="container">
+    <div id="clock">--:--:--</div>
+    <div id="date">loading date...</div>
+    <button id="toggleFormat">switch to 24-hour</button>
+</div>
+
+<script>
+    const clock = document.getElementById("clock");
+    const dateDiv = document.getElementById("date");
+    const toggleBtn = document.getElementById("toggleFormat");
+
+    let is24Hour = false;
+
+    function showTime() {
+        let time = new Date();
+        let hour = time.getHours();
+        let min = time.getMinutes();
+        let sec = time.getSeconds();
+        let am_pm = "";
+
+        if (!is24Hour) {
+            am_pm = hour >= 12 ? " pm" : " am";
+            hour = hour % 12 || 12;
+        }
+
+        hour = hour.toString().padStart(2, "0");
+        min = min.toString().padStart(2, "0");
+        sec = sec.toString().padStart(2, "0");
+
+        clock.textContent = `${hour}:${min}:${sec}${is24Hour ? "" : am_pm}`;
+    }
+
+    function showDate() {
+        const today = new Date();
+        const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+        dateDiv.textContent = today.toLocaleDateString("en-US", options);
+    }
+
+    toggleBtn.addEventListener("click", () => {
+        is24Hour = !is24Hour;
+        toggleBtn.textContent = is24Hour ? "switch to 12-hour" : "switch to 24-hour";
+        showTime();
+    });
+
+    setInterval(showTime, 1000);
+    showTime();
+    showDate();
+</script>
+</body>
+</html>
