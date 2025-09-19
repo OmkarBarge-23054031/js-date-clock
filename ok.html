@@ -4,147 +4,119 @@
     <meta charset="UTF-8">
     <title>Clock and date</title>
     <style>
-        /* background with animated gradient */
+        /* dark grunge animated background */
         body {
             margin: 0;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(270deg, #0f0c29, #302b63, #24243e);
-            background-size: 600% 600%;
-            animation: gradientShift 18s ease infinite;
-            font-family: "poppins", sans-serif;
-            color: white;
+            background: linear-gradient(135deg, #1b1b1b, #2c2c2c, #1b1b1b);
+            background-size: 400% 400%;
+            animation: bgShift 25s ease infinite;
+            font-family: "Orbitron", sans-serif;
+            color: #a5a58d;
+            overflow: hidden;
         }
 
-        /* navbar */
+        @keyframes bgShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
+        /* floating tactical particles */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(200,200,200,0.1);
+            box-shadow: 0 0 5px rgba(200,200,200,0.2);
+            animation: float 20s linear infinite;
+        }
+        .orb:nth-child(1){ width:100px;height:100px;top:15%;left:20%;animation-duration:28s;}
+        .orb:nth-child(2){ width:60px;height:60px;bottom:25%;right:15%;animation-duration:22s;}
+        .orb:nth-child(3){ width:120px;height:120px;top:60%;right:10%;animation-duration:35s;}
+        @keyframes float { 0%{transform:translateY(0) translateX(0);} 50%{transform:translateY(-30px) translateX(20px);} 100%{transform:translateY(0) translateX(0);} }
+
+        /* navbar */
         .navbar {
             position: absolute;
             top: 20px;
             right: 20px;
             display: flex;
-            flex-direction: row;
             gap: 10px;
+            z-index:10;
         }
-
-
-
         .nav-link {
             text-decoration: none;
             padding: 10px 20px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            color: white;
+            border-radius: 8px;
+            background: rgba(50,50,50,0.7);
+            color: #a5a58d;
             font-weight: bold;
-            letter-spacing: 1px;
-            box-shadow: 0 0 10px #00e6ff, 0 0 20px #00e6ff;
-            transition: all 0.3s ease;
+            box-shadow: 0 0 5px #000;
+            transition: 0.3s;
         }
-
         .nav-link:hover {
-            background: #00e6ff;
-            color: black;
-            box-shadow: 0 0 20px #00e6ff, 0 0 40px #00e6ff;
+            background: rgba(100,100,100,0.8);
+            color: #fff;
+            box-shadow: 0 0 15px #aaa;
         }
 
-        /* glassy container */
+        /* container */
         .container {
             text-align: center;
-            padding: 50px 70px;
-            border-radius: 25px;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
-            animation: fadeIn 1.5s ease;
-        }
-
-        /* neon clock styling */
-        #clock {
-            font-size: 5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            letter-spacing: 3px;
-            text-shadow:
-                    0 0 10px #00e6ff,
-                    0 0 20px #00e6ff,
-                    0 0 40px #00e6ff,
-                    0 0 80px #00e6ff;
-            animation: neonPulse 2s infinite alternate;
-        }
-
-        /* neon date styling */
-        #date {
-            font-size: 2rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
-            text-shadow:
-                    0 0 5px #ff00de,
-                    0 0 15px #ff00de,
-                    0 0 30px #ff00de;
-            transition: opacity 0.5s ease;
-        }
-
-        /* button styling */
-        button {
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            border: none;
+            padding: 35px 50px;
             border-radius: 15px;
-            cursor: pointer;
-            background: #ff0080;
-            color: white;
-            font-weight: bold;
-            transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
-            box-shadow: 0 0 15px #ff0080, 0 0 30px #ff0080;
+            background: rgba(30,30,30,0.9);
+            box-shadow: 0 0 20px #000 inset;
+            z-index:5;
         }
 
+        /* digital clock */
+        #clock {
+            font-size:3rem;
+            font-weight:bold;
+            margin-bottom:15px;
+            color:#ff9800;
+        }
+        #date {
+            font-size:1.4rem;
+            margin-bottom:20px;
+            color:#a5a58d;
+        }
+
+        /* button */
+        button {
+            padding:10px 20px;
+            font-size:1rem;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            background:#444;
+            color:#a5a58d;
+            font-weight:bold;
+            transition:0.3s;
+        }
         button:hover {
-            transform: scale(1.1);
-            background: #e60073;
-            box-shadow: 0 0 25px #ff0080, 0 0 50px #ff0080;
-        }
-
-        /* animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes neonPulse {
-            from {
-                text-shadow:
-                        0 0 5px #00e6ff,
-                        0 0 15px #00e6ff,
-                        0 0 30px #00e6ff,
-                        0 0 60px #00e6ff;
-            }
-            to {
-                text-shadow:
-                        0 0 20px #00e6ff,
-                        0 0 40px #00e6ff,
-                        0 0 80px #00e6ff,
-                        0 0 120px #00e6ff;
-            }
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            background:#666;
+            color:#fff;
         }
     </style>
 </head>
 <body>
+<!-- floating particles -->
+<div class="orb"></div>
+<div class="orb"></div>
+<div class="orb"></div>
+
 <!-- nav tab -->
 <nav class="navbar">
     <a href="index.html" class="nav-link">home</a>
     <a href="ok.html" class="nav-link">ok</a>
 </nav>
 
-
+<!-- clock container -->
 <div class="container">
     <div id="clock">--:--:--</div>
     <div id="date">loading date...</div>
@@ -159,37 +131,35 @@
     let is24Hour = false;
 
     function showTime() {
-        let time = new Date();
-        let hour = time.getHours();
-        let min = time.getMinutes();
-        let sec = time.getSeconds();
-        let am_pm = "";
+        const now = new Date();
+        let hour = now.getHours();
+        let min = now.getMinutes();
+        let sec = now.getSeconds();
+        let ampm = "";
 
-        if (!is24Hour) {
-            am_pm = hour >= 12 ? " pm" : " am";
+        if(!is24Hour){
+            ampm = hour >= 12 ? " pm":" am";
             hour = hour % 12 || 12;
         }
 
-        hour = hour.toString().padStart(2, "0");
-        min = min.toString().padStart(2, "0");
-        sec = sec.toString().padStart(2, "0");
-
-        clock.textContent = `${hour}:${min}:${sec}${is24Hour ? "" : am_pm}`;
+        clock.textContent = `${hour.toString().padStart(2,'0')}:${min.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}${is24Hour?"":ampm}`;
     }
 
-    function showDate() {
+    function showDate(){
         const today = new Date();
-        const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
-        dateDiv.textContent = today.toLocaleDateString("en-US", options);
+        dateDiv.textContent = today.toDateString();
     }
 
-    toggleBtn.addEventListener("click", () => {
+    toggleBtn.addEventListener("click", ()=>{
         is24Hour = !is24Hour;
         toggleBtn.textContent = is24Hour ? "switch to 12-hour" : "switch to 24-hour";
         showTime();
     });
 
-    setInterval(showTime, 1000);
+    setInterval(()=>{
+        showTime();
+    },1000);
+
     showTime();
     showDate();
 </script>
